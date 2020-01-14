@@ -11,3 +11,15 @@ def getCreds(file):
 class TwitterClient(object):
 	def __init__(self):
 		consumer_key, consumer_key_secret, access_token, access_token_secret = getCreds('credentials.txt')
+
+		try:
+			self.auth = OAuthHandler(consumer_key, consumer_key_secret)
+			self.auth.set_access_token(access_token, access_token_secret)
+			self.api = tweepy.API(self.auth)
+		except:
+			print("Error: Authentication Failure")
+
+	# using regex to clean the tweet
+	def clean_tweet(self, tweet):
+		return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+
