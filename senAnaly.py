@@ -21,6 +21,7 @@ class TwitterClient(object):
 
 	# using regex to clean the tweet
 	def clean_tweet(self, tweet):
+		# checks to eliminate three things: @usernames, something, and URLs
 		return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
 
 	def get_sentiment(self, tweet):  
@@ -31,4 +32,49 @@ class TwitterClient(object):
 			return 'neutral'
 		else: 
 			return 'negative'
+
+	def get_tweets(self, query, count = 10):
+		
+		tweets = []
+		try:
+			fetched_tweets = self.api.search(q = query, count = count)
+
+			for tweet in fetched_tweets:
+				parse_tweet = {}
+
+				parse_tweet['text'] = tweet.text
+
+				parse_tweet['sentiment'] = self.get_sentiment(tweet.text)
+
+				if tweet.retweet_count > 0:
+					if parse_tweet not in tweets:
+						tweets.append(parse_tweet)
+				else:
+					tweets.append(parse_tweet)
+			return tweets
+
+		except tweepy.TweepError as e:
+			print("Error: " + str(e))
+
+	def main(self):
+		api = TwitterClient()
+		query = input("Search Twitter: ")
+		tweets = api.get_tweets(query = query, count = 200)
+		ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
+		ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
+		ztweets = [tweet for tweet in tweets if tweet['sentiment'] == 'neutral']
+		print("Positive tweets percentage: ", (100 * len(ptweets)/len(tweets), "%"))
+		print("Negative tweets percentage: ", (100 * len(ntweets)/len(tweets), "%"))
+		print("Neutral tweets percentage: ", (100 * len(ztweets)/len(tweets), "%"))
+
+		for tweet in ptweets[:10]:
+			print(tweet['text'])
+
+		for tweet in ntweets[:10]:
+			print(tweet['text'])
+
+if __name__ == '__main__':
+	tc = TwitterClient()
+	tc.main()
+
 
