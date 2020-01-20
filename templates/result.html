@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block text %}
+<div>
+	{% for sentim in range(results|length) %}
+		{% if sentim == 0 %}
+		<h3> Positive Tweets </h3>
+		{% elif sentim == 1 %}
+		<h3> Negative Tweets </h3>
+		{% else %}
+		<h3> Neutral Tweets </h3>
+		{% endif %}
+		
+		{% for item in results[sentim] %}
+			<p>{{ item }}</p>
+		{% endfor %}
+	{% endfor %}
+</div>
+{% endblock %}

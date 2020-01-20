@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block text %}
+<div>
+	<h1>Enter your search below!</h1>
+</div>
+
+<div class = 'form'>
+	<form action = '/' method = 'POST'>
+		<input type = "text" name = "content" value = "Donald Trump">
+		<input type = "submit" value = "Search">
+	</form>
+</div>
+{% endblock %}

@@ -56,25 +56,27 @@ class TwitterClient(object):
 		except tweepy.TweepError as e:
 			print("Error: " + str(e))
 
-	def main(self):
-		api = TwitterClient()
-		query = input("Search Twitter: ")
-		tweets = api.get_tweets(query = query, count = 200)
+	def main(self, query):
+		# api = TwitterClient()
+		# query = input("Search Twitter: ")
+		tweets = self.get_tweets(query = query, count = 200)
 		ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
 		ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
 		ztweets = [tweet for tweet in tweets if tweet['sentiment'] == 'neutral']
-		print("Positive tweets percentage: ", (100 * len(ptweets)/len(tweets), "%"))
-		print("Negative tweets percentage: ", (100 * len(ntweets)/len(tweets), "%"))
-		print("Neutral tweets percentage: ", (100 * len(ztweets)/len(tweets), "%"))
+		# print("Positive tweets percentage: ", (100 * len(ptweets)/len(tweets), "%"))
+		# print("Negative tweets percentage: ", (100 * len(ntweets)/len(tweets), "%"))
+		# print("Neutral tweets percentage: ", (100 * len(ztweets)/len(tweets), "%"))
 
-		for tweet in ptweets[:10]:
-			print(tweet['text'])
+		# for tweet in ptweets[:10]:
+		# 	print(tweet['text'])
 
-		for tweet in ntweets[:10]:
-			print(tweet['text'])
+		# for tweet in ntweets[:10]:
+		# 	print(tweet['text'])
+
+		return (ptweets, ntweets, ztweets)
 
 if __name__ == '__main__':
 	tc = TwitterClient()
-	tc.main()
+	tc.main('Donald Trump')
 
 
