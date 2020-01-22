@@ -12,6 +12,6 @@ def index():
 		results = queryObject.main(query)
 
 		return render_template('result.html', results = results)
-
+		
 	else:
 		return render_template('index.html')
