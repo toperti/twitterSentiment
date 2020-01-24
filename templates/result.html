@@ -2,13 +2,13 @@
 
 {% block text %}
 <div>
-	{% for sentim in range(results|length) %}
+	{% for sentim in range((results|length)-3) %}
 		{% if sentim == 0 %}
-		<h3> Positive Tweets </h3>
+		<h3> Positive Tweets {{ results[sentim+3] }}</h3>
 		{% elif sentim == 1 %}
-		<h3> Negative Tweets </h3>
+		<h3> Negative Tweets {{ results[sentim+3] }}</h3>
 		{% else %}
-		<h3> Neutral Tweets </h3>
+		<h3> Neutral Tweets {{ results[sentim+3] }}</h3>
 		{% endif %}
 		
 		{% for item in results[sentim] %}

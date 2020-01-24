@@ -63,9 +63,9 @@ class TwitterClient(object):
 		ptweets = [tweet for tweet in tweets if tweet['sentiment'] == 'positive']
 		ntweets = [tweet for tweet in tweets if tweet['sentiment'] == 'negative']
 		ztweets = [tweet for tweet in tweets if tweet['sentiment'] == 'neutral']
-		# print("Positive tweets percentage: ", (100 * len(ptweets)/len(tweets), "%"))
-		# print("Negative tweets percentage: ", (100 * len(ntweets)/len(tweets), "%"))
-		# print("Neutral tweets percentage: ", (100 * len(ztweets)/len(tweets), "%"))
+		ptweetsPercent = (100 * len(ptweets)/len(tweets), "%")
+		ntweetsPercent = (100 * len(ntweets)/len(tweets), "%")
+		ztweetsPercent = (100 * len(ztweets)/len(tweets), "%")
 
 		# for tweet in ptweets[:10]:
 		# 	print(tweet['text'])
@@ -73,7 +73,7 @@ class TwitterClient(object):
 		# for tweet in ntweets[:10]:
 		# 	print(tweet['text'])
 
-		return (ptweets, ntweets, ztweets)
+		return (ptweets, ntweets, ztweets, ptweetsPercent, ntweetsPercent, ztweetsPercent)
 
 if __name__ == '__main__':
 	tc = TwitterClient()
